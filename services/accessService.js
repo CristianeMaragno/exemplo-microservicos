@@ -17,8 +17,32 @@ app.post('/entry', async (req, res) => {
     }
 
     // Atualizar vagas - service parking
+    url = `http://localhost:3003/park`;
+    axios({
+        method: "PUT",
+        url,
+        data: {
+            "location": parkingId
+        }
+    }).then(response => {
+        res.json(response.data);
+    }).catch(err => {
+        res.status(err.response.status).json(err.response.data);
+    });
+    // Atualizar crédito do usuário
+    url = `http://localhost:3003/use/:userId'`;
+    axios({
+        method: "GET",
+        url,
+        data: {
+            "userId": userId
+        }
+    }).then(response => {
+        res.json(response.data);
+    }).catch(err => {
+        res.status(err.response.status).json(err.response.data);
+    });
 
-    // Atualizar cŕedito do usuário
 
     // Registrar entrada
     db.run(`INSERT INTO access_log (userId, entryTime) VALUES (?, ?)`, [userId, new Date().toISOString()]);
@@ -30,6 +54,31 @@ app.post('/exit', async (req, res) => {
     const { userId, parkingId } = req.body;
 
     // Atualizar vagas- service parking
+    url = `http://localhost:3003/unpark`;
+    axios({
+        method: "PUT",
+        url,
+        data: {
+            "location": parkingId
+        }
+    }).then(response => {
+        res.json(response.data);
+    }).catch(err => {
+        res.status(err.response.status).json(err.response.data);
+    });
+
+    //Mandar cancela abrir
+    url = `http://localhost:3003/gate/open`;
+    axios({
+        method: "POST",
+        url,
+        data: {}
+    }).then(response => {
+        res.json(response.data);
+    }).catch(err => {
+        res.status(err.response.status).json(err.response.data);
+    });
+
 
     // Registrar saída
     db.run(`UPDATE access_log SET exitTime = ? WHERE userId = ? AND exitTime IS NULL`, [new Date().toISOString(), userId]);
@@ -38,7 +87,6 @@ app.post('/exit', async (req, res) => {
 });
 
 //Add route to get logs
-
 app.listen(PORT, () => {
     console.log(`Access service running on port ${PORT}`);
 });

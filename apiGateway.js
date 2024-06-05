@@ -24,6 +24,7 @@ const services = {
     gateService: 'http://localhost:3005'
 };
 
+
 app.use('/users', (req, res) => {
     const url = `${services.userService}${req.url}`;
     axios({
