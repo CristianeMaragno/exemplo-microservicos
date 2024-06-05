@@ -33,7 +33,17 @@ app.get('/use/:userId', (req, res) => {
         if (err) {
             return res.status(400).json({ error: err.message });
         }
-        res.json({ balance: row.balance });
+        return res.status(200);
+    });
+});
+
+app.get('/unuse/:userId', (req, res) => {
+    const query = `UPDATE credits SET balance = balance + 1 WHERE userId = ?`;
+    db.get(query, [req.params.userId], (err, row) => {
+        if (err) {
+            return res.status(400).json({ error: err.message });
+        }
+        return res.status(200);
     });
 });
 

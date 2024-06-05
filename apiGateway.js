@@ -7,10 +7,10 @@ const PORT = 3000;
 /*
 Execute services and gateway
 node services/userService.js
-node services/creditService.js
-node services/parkingService.js
-node services/accessService.js
-node services/gateService.js
+node services/creditService.js 
+node services/parkingService.js 
+node services/accessService.js 
+node services/gateService.js 
 node apiGateway.js
 */
 

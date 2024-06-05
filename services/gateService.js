@@ -5,13 +5,23 @@ const PORT = 3005;
 
 app.use(bodyParser.json());
 
-app.post('/gate/open', (req, res) => {
-    console.log('Cancela aberta');
-    res.json({ message: 'Cancela aberta' });
+app.post('/open', (req, res) => {;
+    setTimeout(() => {
+        console.log('Cancela aberta...');
+    }, 2000);
+
+    setTimeout(() => {
+        console.log('Esperando carro passar...');
+    }, 2000);
+
+    setTimeout(() => {
+        console.log('Cancela fechada...');
+    }, 2000);
+    res.json({ message: 'Ciclo da cancela executado' });
 });
 
-app.post('/gate/close', (req, res) => {
-    console.log('Cancela fechada');
+app.post('/close', (req, res) => {
+    console.log('Fechar cancela');
     res.json({ message: 'Cancela fechada' });
 });
 

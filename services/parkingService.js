@@ -27,6 +27,20 @@ app.get('/parking', (req, res) => {
     });
 });
 
+app.post('/parking', (req, res) => {
+    const { location } = req.body;
+    const query = `SELECT availableSpaces FROM parking WHERE location = ?`;
+    db.get(query, [location], (err, row) => {
+        if (err) {
+            return res.status(400).json({ error: err.message });
+        }
+        if (!row) {
+            return res.status(404).json({ error: 'Location not found' });
+        }
+        res.json({ availableSpaces: row.availableSpaces });
+    });
+});
+
 app.put('/park', (req, res) => {
     const { location } = req.body;
     //validate if full here too?
